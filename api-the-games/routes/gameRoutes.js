@@ -11,6 +11,7 @@ gameRoutes.post("/games", gameController.createGame);
 //Endpoint para deletar um jogo (rota)
 gameRoutes.delete("/games/:id", gameController.deleteGame);
 
-
+//Endpoint para alterar um jogo (rota)
+gameRoutes.put("/games/:id", gameController.updateGame);
 
 export default gameRoutes;

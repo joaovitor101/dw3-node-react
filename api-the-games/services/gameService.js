@@ -41,8 +41,38 @@ class gameService {
       console.log(error);
     }
   }
+
+  async Update(id, title, platform, year, price) {
+    try {
+      await Game.findByIdAndUpdate(id, {
+        title,
+        platform,
+        year,
+        price,
+      });
+      console.log(`Game com a id ${id} atualizado com sucesso`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  //Função para listar um unico jogo
+  async getOne(id) {
+    try {
+      const game = await Game.findById(id);
+      return game;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 }
 
-//Função para cadastrar jogos
+
+
+
+
+
+
 
 export default new gameService();
