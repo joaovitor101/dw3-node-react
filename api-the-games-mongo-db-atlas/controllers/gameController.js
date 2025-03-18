@@ -21,9 +21,9 @@ const createGame = async (req, res) => {
 
     // Desestruturação
     // Capturando valores
-    const { title, platform, year, price } = req.body;
+    const { title, year, price, descriptions } = req.body;
     // Cadastrando no banco
-    await gameService.Create(title, platform, year, price);
+    await gameService.Create(title, year, price, descriptions);
     res.sendStatus(201); // Código 201 (CREATED)
   } catch (error) {
     console.log(error);
@@ -55,8 +55,8 @@ const updateGame = async (req, res) => {
       const id = req.params.id;
       // Desestruturação
       //const title = req.body.title
-      const { title, platform, year, price } = req.body;
-      gameService.Update(id, title, platform, year, price);
+      const { title, year, price, descriptions } = req.body;
+      gameService.Update(id, title, year, price, descriptions);
       res.sendStatus(200); // Código 200 (OK): Requisição bem sucedida
     } else {
       res.sendStatus(400); // Código 400 (Bad Request): Requisição mal formada

@@ -12,7 +12,7 @@ app.use(express.json());
 app.use('/', gameRoutes)
 
 // Iniciando a conexão com o banco de dados do MongoDB
-mongoose.connect("mongodb://127.0.0.1:27017/api-thegames")
+mongoose.connect("mongodb://127.0.0.1:27017/api-the-games")
 
 // ROTA PRINCIPAL
 app.get("/", (req, res) => {
@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 });
 
 // Iniciando o servidor
-const port = 4000;
+const port = 4040;
 app.listen(port, (error) => {
   if (error) {
     console.log(error);
