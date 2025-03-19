@@ -1,5 +1,6 @@
 import express from "express";
-import mongoose from "mongoose";
+// import mongoose from 'mongoose';
+import mongoose from './config/db-connection.js';
 import Games from "./models/Games.js"
 const app = express();
 
@@ -12,7 +13,7 @@ app.use(express.json());
 app.use('/', gameRoutes)
 
 // Iniciando a conexão com o banco de dados do MongoDB
-mongoose.connect("mongodb://127.0.0.1:27017/api-the-games")
+// mongoose.connect("mongodb://127.0.0.1:27017/api-the-games")
 
 // ROTA PRINCIPAL
 app.get("/", (req, res) => {
