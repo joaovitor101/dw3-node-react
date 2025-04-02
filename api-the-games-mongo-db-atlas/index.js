@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
 });
 
 // Iniciando o servidor
-const port = 4040;
+const port = 4000;
 app.listen(port, (error) => {
   if (error) {
     console.log(error);

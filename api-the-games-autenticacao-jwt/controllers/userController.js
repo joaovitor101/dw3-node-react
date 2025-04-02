@@ -1,5 +1,6 @@
 import userService from "../services/userServices.js";
 import jwt from "jsonwebtoken";
+const JWTSecret = "thegamessecret"
 const createUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -48,4 +49,4 @@ const loginUser = async (req, res) => {
     }
 };
 
-export default { createUser, loginUser };
+export default { createUser, loginUser, JWTSecret };
