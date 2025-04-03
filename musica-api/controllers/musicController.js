@@ -21,9 +21,9 @@ const createMusica = async (req, res) => {
 
     // Desestruturação
     // Capturando valores
-    const { title, year, price, descriptions } = req.body;
+    const { artist, album, year, genre, duration, track } = req.body;
     // Cadastrando no banco
-    await musicaService.Create(title, year, price, descriptions);
+    await musicaService.Create(artist, album, year, genre, duration, track);
     res.sendStatus(201); // Código 201 (CREATED)
   } catch (error) {
     console.log(error);
@@ -36,11 +36,11 @@ const deleteMusica = async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id)) {
       const id = req.params.id;
-      musicaService.Delete(id);
-      res.sendStatus(204); // Código 204 (NO CONTENT)
+      await musicaService.Delete(id);
+      
+      res.status(200).json({ message: "Deletado com sucesso" }); // Mensagem de sucesso
     } else {
       res.sendStatus(400); // Código 400 (BAD REQUEST)
-      // Requisição mal formada
     }
   } catch (error) {
     console.log(error);
@@ -55,8 +55,8 @@ const updateMusica = async (req, res) => {
       const id = req.params.id;
       // Desestruturação
       //const title = req.body.title
-      const { title, year, price, descriptions } = req.body;
-      musicaService.Update(id, title, year, price, descriptions);
+      const { artist, album, year, genre, duration, track} = req.body;
+      musicaService.Update(id, artist, album, year, genre, duration, track );
       res.sendStatus(200); // Código 200 (OK): Requisição bem sucedida
     } else {
       res.sendStatus(400); // Código 400 (Bad Request): Requisição mal formada
