@@ -11,7 +11,7 @@ const gameSchema = new mongoose.Schema({
   title: String,
   year: Number,
   price: Number,
-  descriptions: [descriptionSchema] // Array de objetos
+  descriptions: descriptionSchema
 });
 
 // Aqui está sendo criado a coleção games no banco de dados
