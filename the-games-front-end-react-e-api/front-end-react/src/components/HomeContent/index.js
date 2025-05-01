@@ -1,45 +1,52 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
 import styles from "@/components/HomeContent/HomeContent.module.css";
 import Loading from "../Loading";
-import axios from "axios";
-import { useState, useEffect } from "react";
+import EditContent from "../EditContent";
 
 const HomeContent = () => {
-  // Criando um estado para GAMES
   const [games, setGames] = useState([]);
-  // Estado para o Loading
   const [loading, setLoading] = useState(true);
+  const [selectedGame, setSelectedGame] = useState(null);
 
-  // Efeito colateral
   useEffect(() => {
     const fetchGames = async () => {
       try {
         const response = await axios.get("http://localhost:4000/games");
-        // console.log(response);
-        // Pegando a lista de games e colando no estado
         setGames(response.data.games);
+        // console.log(response.data.games);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
     };
-    // Invocando a função
     fetchGames();
-  }, []); // Dependência do useEffect
+  }, []);
 
-  // Função para deletar
+  // Função para DELETAR um jogo
   const deleteGame = async (gameId) => {
     try {
       const response = await axios.delete(
         `http://localhost:4000/games/${gameId}`
       );
       if (response.status === 204) {
-        alert("Jogo excluído com sucesso!");
+        alert("O jogo foi excluído com sucesso.");
         setGames(games.filter((game) => game._id !== gameId));
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
+  };
+
+  // Função para ABRIR O MODAL de edição com os dados do jogo
+  const openEditModal = (game) => {
+    setSelectedGame(game);
+  };
+
+  // Função para FECHAR O MODAL de edição
+  const closeEditModal = () => {
+    setSelectedGame(null);
   };
 
   return (
@@ -51,7 +58,6 @@ const HomeContent = () => {
           <div className={styles.title}>
             <h2>Lista de jogos</h2>
           </div>
-          {/* GIF de carregamento */}
           <Loading loading={loading} />
           <div className={styles.games} id={styles.games}>
             {/* Lista de jogos irá aqui */}
@@ -73,7 +79,7 @@ const HomeContent = () => {
                       currency: "BRL",
                     })}
                   </li>
-                  {/* Botão para excluir */}
+                  {/* Botão de deletar */}
                   <button
                     className={styles.btnDel}
                     onClick={() => {
@@ -81,18 +87,28 @@ const HomeContent = () => {
                         "Deseja mesmo excluir o jogo?"
                       );
                       if (confirmed) {
-                        // Função para deletar
                         deleteGame(game._id);
                       }
                     }}
                   >
                     Deletar
                   </button>
+
+                  {/* Botão de editar */}
+                  <button
+                    className={styles.btnEdit}
+                    onClick={() => openEditModal(game)}
+                  >
+                    Editar
+                  </button>
                 </div>
               </ul>
             ))}
           </div>
         </div>
+        {selectedGame && (
+          <EditContent game={selectedGame} onClose={closeEditModal} />
+        )}
       </div>
     </>
   );
